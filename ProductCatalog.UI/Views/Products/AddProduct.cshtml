@@ -1,0 +1,111 @@
+﻿@model NewProductViewModel
+@{
+	ViewData["Title"] = "AddProduct";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" enctype="multipart/form-data">
+
+
+	<div class="panel panel-primary">
+		<div class="panel-body">
+			@using (Html.BeginForm())
+			{
+				<div class="form-horizontal">
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Name, new { @class = "col-lg-2 control-label" })
+						<div class="col-lg-9 text-danger">
+							@Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+							@Html.ValidationMessageFor(model => model.Name)
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Price, new { @class = "col-lg-2 control-label" })
+						<div class="col-lg-9 text-danger">
+							@Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+							@Html.ValidationMessageFor(model => model.Price)
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="CategoryId">Kategori</label>
+						<select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control select-add-placeholder">
+							<option value="">Seçim Yapınız</option>
+						</select>
+						<span asp-validation-for="CategoryId" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="BrandId">Marka</label>
+						<select asp-for="BrandId" asp-items="ViewBag.Brands" class="form-control select-add-placeholder">
+							<option value="">Seçim Yapınız</option>
+						</select>
+						<span asp-validation-for="BrandId" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="ColorId">Renk</label>
+						<select asp-for="ColorId" asp-items="ViewBag.Colors" class="form-control select-add-placeholder">
+							<option value="">Seçim Yapınız</option>
+						</select>
+						<span asp-validation-for="ColorId" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="UsingStatusId">Kullanım Durumu</label>
+						<select asp-for="UsingStatusId" asp-items="ViewBag.UsingStatuses" class="form-control select-add-placeholder">
+							<option value="">Seçim Yapınız</option>
+						</select>
+						<span asp-validation-for="UsingStatusId" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Size, new { @class = "col-lg-2 control-label" })
+						<div class="col-lg-9 text-danger">
+							@Html.TextBoxFor(model => model.Size, new { @class = "form-control" })
+							@Html.ValidationMessageFor(model => model.Size)
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Description, new { @class = "col-lg-2 control-label" })
+						<div class="col-lg-9 text-danger">
+							@Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+							@Html.ValidationMessageFor(model => model.Description)
+						</div>
+					</div>
+
+					<dl>
+						<dt>
+							<label asp-for="@Model.Image"></label>
+						</dt>
+						<dd>
+							<input asp-for="@Model.Image" type="file">
+							<span asp-validation-for="@Model.Image"></span>
+						</dd>
+					</dl>
+
+					<div class="form-group">
+						@Html.Raw(TempData["ErrorMessage"])
+					</div>
+
+					<div class="form-group">
+						<div class="col-lg-9"></div>
+						<div class="col-lg-3">
+							<button class="btn btn-success" id="btnSubmit" type="submit">
+								Submit
+							</button>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+
+
+
+
+</form>
+

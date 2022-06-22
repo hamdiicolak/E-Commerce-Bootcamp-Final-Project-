@@ -1,0 +1,117 @@
+﻿@model ProductAndOfferVM
+@{
+	ViewData["Title"] = "ProductDetail";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="height d-flex justify-content-center align-items-center">
+
+	<div class="card p-5">
+
+		<div class="d-flex justify-content-between align-items-center ">
+			<div class="mt-2">
+				<h4 class="text-uppercase">@Model.Product.Name</h4>
+				<div class="mt-2">
+					<h5 class="text-uppercase mb-0">@Model.Product.Brand</h5>
+					<h6 class="main-heading mt-0">@Model.Product.UserName</h6>
+					<h6 class="main-heading mt-0">@Model.Product.Price</h6>
+				</div>
+			</div>
+			<div class="image">
+				<img src="@Url.Content("/uploadedFiles/Images/" + @Model.Product.ImageUrl)" height="200" />
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between align-items-center mt-2 mb-2">
+			<span>Renk : @Model.Product.Color</span>
+		</div>
+
+
+		<p>@Model.Product.UsingStatus</p>
+		<p>@Model.Product.Description</p>
+
+		<div class="form-group">
+
+			@if (Model.Product.IsOfferable)
+			{
+				@using (Html.BeginForm("NewOffer", "Offers", FormMethod.Post))
+				{
+					@Html.Hidden("productId", Model.Product.Id)
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#offerModal">Teklif Ver</button>
+					<div id="offerModal" class="modal" tabindex="-1" role="dialog">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Teklif Pop up</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<label>Teklif Değeri</label>
+										<input type="number" asp-for="@Model.Offer.OfferPrice" class="form-control" />
+										@Html.ValidationMessageFor(model => Model.Offer.OfferPrice)
+									</div>
+									<div class="modal-footer">
+										<input type="submit" value="Teklif Ver" class="btn btn-default" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+				<br />
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buyModal">Satın Al</button>
+				<div id="buyModal" class="modal" tabindex="-1" role="dialog">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Satın al pop up</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<div class="image">
+										<img src="@Url.Content("/uploadedFiles/Images/" + @Model.Product.ImageUrl)" height="200" />
+									</div>
+									<div>
+										<label>@Model.Product.Name</label>
+									</div>
+									<div>
+										<label>@Model.Product.Price</label>
+									</div>
+								</div>
+								<a class="btn btn-danger" asp-controller="Products" asp-action="BuyProduct" asp-route-id="@Model.Product.Id" role="button">
+									Satın Al
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br />
+
+				<div class="form-group">
+					@Html.Raw(TempData["ErrorMessages"])
+				</div>
+			}
+			else
+			{
+				<div class="d-flex justify-content-between align-items-center mt-2 mb-2">
+					<p class="text-primary">Ürün Satıldı.</p>
+				</div>
+			}
+
+
+			@*<a class="btn btn-danger" asp-controller="Products" data-toggle"modal" data-target="#exampleModal" asp-action="BuyProduct" asp-route-id="@Model.Product.Id" role="button">
+			Satın Al
+			</a>*@
+
+		</div>
+	</div>
+</div>
+
+
+
